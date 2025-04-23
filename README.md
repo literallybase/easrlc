@@ -15,6 +15,7 @@ npm install easrlc
 Using the package is very easy. Just require/import the package and initialize the client with your server key! An example in Javascript and Typescript will be shown below.
 
 ```javascript
+// index.js
 const easrlc = require('easrlc');
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ easrlc
 ```
 
 ```typescript
+// index.ts
 import easrlc from 'easrlc';
 import { config } from 'dotenv';
 config();
