@@ -3,7 +3,7 @@
 A Node.js wrapper for the PRC client with 100% API coverage.
 
 ## Features
-- 100& API Coverage
+- 100% API Coverage
 - Event System
 - Rate Limit Handling (Coming Soon...)
 - Queuing System (Coming Soon...)
