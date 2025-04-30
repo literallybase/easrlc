@@ -2,45 +2,71 @@
 
 A Node.js wrapper for the PRC client with 100% API coverage.
 
+## Features
+- 100& API Coverage
+- Event System
+- Rate Limit Handling (Coming Soon...)
+- Queuing System (Coming Soon...)
+
 ## Installation
 
-First things first, you need to install the package.
+Install the package using NPM.
 
 ```bash
 npm install easrlc
 ```
 
-### Usage
+## Auth
 
-Using the package is very easy. Just require/import the package and initialize the client with your server key! An example in Javascript and Typescript will be shown below.
+Login to the client using the initialize function. If needed, you can include a global API key for increased rate limits.
 
 ```javascript
-// index.js
-const easrlc = require('easrlc');
+const { Client } = require('easrlc');
+
+const client = new Client({
+  ServerKey: 'server key',
+  GlobalAuth: 'global key', // if needed
+});
+
+client
+  .initiate()
+  .then((server) => {
+    console.log(`Connected to ${server.Name}`);
+  })
+  .catch(console.error);
+```
+
+## Events
+
+To start getting events, set the EnableEvents client property to true. Here's a quick example on how to use events.
+
+```javascript
+const { Client } = require('easrlc');
 require('dotenv').config();
 
-new easrlc.Client(process.env.SERVERKEY).initiate();
+const client = new Client({
+  ServerKey: process.env.SERVERKEY,
+  EnableEvents: true, // set to true to start emitting events
+});
 
-easrlc
-  .getServer()
+client.on('command', (command) => {
+  console.log(
+    `${command.Player} ran ${command.Command} at ${command.Timestamp}`
+  );
+});
+
+client
+  .initiate()
   .then((server) => {
-    console.log(server);
+    console.log(`Connected to ${server.Name}`);
   })
   .catch(console.error);
 ```
 
-```typescript
-// index.ts
-import easrlc from 'easrlc';
-import { config } from 'dotenv';
-config();
-
-new easrlc.Client(process.env.SERVERKEY as string).initiate();
-
-easrlc
-  .getServer()
-  .then((server) => {
-    console.log(server);
-  })
-  .catch(console.error);
-```
+### Event List
+- Bans
+- Calls
+- Commands
+- Errors
+- Joins
+- Kills

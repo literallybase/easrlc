@@ -1,7 +1,27 @@
+import EventEmitter from 'node:events'
+
 declare module 'easrlc' {
-  export class Client {
-    constructor(serverKey: string);
-    initiate(): void;
+  export interface ClientOptions {
+    ServerKey: string;
+    GlobalAuth?: string;
+    EnableEvents?: boolean;
+  }
+
+  export class Client extends EventEmitter {
+    constructor(options: ClientOptions);
+    async initiate(): Promise<Server>;
+
+    on<K extends keyof ClientEvents>(event: K, listener: (data: ClientEvents[K]) => void): this;
+    emit<K extends keyof ClientEvents>(event: K, data: ClientEvents[K]): boolean;
+  }
+
+  export interface ClientEvents {
+    join: Join;
+    call: ModCall;
+    kill: Kill;
+    ban: Ban;
+    command: Command;
+    error: unknown;
   }
 
   export interface Server {

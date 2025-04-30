@@ -1,6 +1,6 @@
-exports.config = { serverKey: '' };
+exports.config = { serverKey: '', globalAuth: '' };
 
-exports.Client = require('./client');
+exports.Client = require('./classes/client');
 
 exports.getBans = require('./functions/server/bans');
 exports.getCalls = require('./functions/server/calls');

@@ -1,9 +1,5 @@
 const { config } = require('../easrlc');
 
-/**
- * @param {string} endpoint
- * @returns
- */
 module.exports = (endpoint) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -17,6 +13,12 @@ module.exports = (endpoint) => {
           },
         }
       );
+
+      const rateLimitHeaders = {
+        limit: response.headers.get('x-ratelimit-limit'),
+        remaining: response.headers.get('x-ratelimit-remaining'),
+        reset: response.headers.get('x-ratelimit-reset'),
+      };
 
       const data = await response.json().catch((err) => {
         return reject(err);
