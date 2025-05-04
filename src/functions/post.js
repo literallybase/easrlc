@@ -10,25 +10,16 @@ module.exports = (endpoint, body) => {
           method: 'POST',
           headers: {
             'Server-Key': config.serverKey,
+            Authorization: config.globalAuth,
             'Content-Type': 'application/json',
           },
           body: body,
         }
       );
 
-      const rateLimitHeaders = {
-        limit: response.headers.get('x-ratelimit-limit'),
-        remaining: response.headers.get('x-ratelimit-remaining'),
-        reset: response.headers.get('x-ratelimit-reset'),
-      };
-
-      const data = await response.json().catch((err) => {
-        return reject(err);
-      });
-
+      const data = await response.json();
       if (!response.ok) {
-        console.log('not ok')
-        reject(data);
+        return reject(data);
       }
 
       resolve(data);
