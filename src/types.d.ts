@@ -22,6 +22,7 @@ declare module 'easrlc' {
     ban: Ban;
     command: Command;
     error: unknown;
+    info: string;
   }
 
   export interface Server {

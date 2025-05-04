@@ -106,6 +106,18 @@ module.exports = class Client extends EventEmitter {
         this.emit('error', error);
       }
     }, 5000);
+
+    this.cacheClearInterval = setInterval(() => {
+      this.cache = {
+        joins: [],
+        kills: [],
+        calls: [],
+        bans: [],
+        commands: [],
+      };
+      this._writeCache(this.cache);
+      this.emit('info', 'Cache cleared');
+    }, 1000 * 60 * 60);
   }
 
   _emitEvents(eventName, newData, cacheKey) {
@@ -145,6 +157,10 @@ module.exports = class Client extends EventEmitter {
     if (this.eventInterval) {
       clearInterval(this.eventInterval);
       this.eventInterval = null;
+    }
+    if (this.cacheClearInterval) {
+      clearInterval(this.cacheClearInterval);
+      this.cacheClearInterval = null;
     }
   }
 };

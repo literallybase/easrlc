@@ -63,6 +63,8 @@ client
   .catch(console.error);
 ```
 
+The event system uses a cache system to prevent duplicate events upon restarting the client. This cache is cleared every hour.
+
 ### Event List
 - Bans
 - Calls
