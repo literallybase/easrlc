@@ -20,7 +20,11 @@ module.exports = (endpoint) => {
         return reject(data);
       }
 
-      resolve(data);
+      if (data && typeof data === 'object' && !Array.isArray(data)) {
+        resolve([data]);
+      } else {
+        resolve(data);
+      }
     } catch (error) {
       reject(error);
     }

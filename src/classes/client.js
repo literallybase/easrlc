@@ -86,8 +86,12 @@ module.exports = class Client extends EventEmitter {
 
   _emitEvents(eventName, newData, cache) {
     if (!Array.isArray(newData)) {
-      this.emit('error', new Error(`Expected an array for ${eventName}, but received: ${typeof newData}`));
-      return;
+      if (newData && typeof newData === 'object') {
+        newData = [newData];
+      } else {
+        this.emit('error', new Error(`Expected an array for ${eventName}, but received: ${typeof newData}`));
+        return;
+      }
     }
 
     newData.forEach((data) => {
